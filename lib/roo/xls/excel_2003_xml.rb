@@ -22,7 +22,7 @@ class Roo::Excel2003XML < Roo::Base
       @doc = ::Roo::Utils.load_xml(@filename)
     end
     namespace = @doc.namespaces.select { |_, urn| urn == 'urn:schemas-microsoft-com:office:spreadsheet' }.keys.last
-    splited_namespace = namespace.split(':')
+    splited_namespace = namespace&.split(':') || []
     @namespace = splited_namespace.size > 1 ? splited_namespace.last : 'ss'
     super(filename, options)
     @formula = {}
