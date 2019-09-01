@@ -22,9 +22,9 @@ class Roo::Excel2003XML < Roo::Base
       @doc = ::Roo::Utils.load_xml(@filename)
     end
     namespace = @doc.namespaces.select { |_, urn| urn == 'urn:schemas-microsoft-com:office:spreadsheet' }.keys.last
-    if namespace.to_s.empty?
+    if namespace.to_s.empty? || namespace.split(':').size == 1
       namespace = 'xmlns:ss'
-      @doc.namespaces << 'xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"'
+      @doc.namespaces['xmlns:ss'] = "urn:schemas-microsoft-com:office:spreadsheet"
     end
     @namespace = namespace.split(':').last || 'ss'
     super(filename, options)
